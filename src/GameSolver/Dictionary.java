@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 public class Dictionary {
@@ -12,7 +13,8 @@ public class Dictionary {
     private static FileReader fileReader;
     private static ArrayList<String> words = new ArrayList<String>();
     private static Scanner keyboard = new Scanner(System.in);
-    private static ArrayList<String> wordChecker = new ArrayList<String>();
+    private static String[] wordChecker;
+    private static ArrayList<String> finalWords;
 
     public static void main(String[] args) {
 
@@ -20,6 +22,8 @@ public class Dictionary {
         // *********************************************************************
         String fileName = "words_alpha.txt";
         String line = null;
+        
+        // adds all the words from the dictionary to an ArrayList
         try {
             fileReader = new FileReader(fileName);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -34,11 +38,57 @@ public class Dictionary {
         }
         // *********************************************************************
 
-        System.out.println("Please enter the number of alphabets: - ");
+        // takes in the number of letters
         int num = 0;
+        System.out.println("Please enter the number of alphabets: - ");
         num = keyboard.nextInt();
+        
+        // takes in letters to be added by the user
+        wordChecker = new String[num];
+        System.out.println("Please enter the letters ");
         for (int i = 0; i < num; i++) {
-            wordChecker.add(keyboard.next());
+            wordChecker[i] = keyboard.next();
+        }
+        
+        // making a clone of the list so that our original list 
+        // doesn't get affected
+        finalWords = (ArrayList<String>) words.clone();
+        
+        /*
+        // removes the word greater than the max. length of the word
+        for(int i = 0; i < finalWords.size(); i++) {
+            if(finalWords.get(i).length()>num) {
+                finalWords.remove(i);
+            }
+        }
+        */
+        
+        ListIterator<String> it = finalWords.listIterator();
+        
+        // removing every possible word which dosen't start with the letters
+        // entered by the user and also removes the word greater than the max.
+        // length of the word 
+        
+            while(it.hasNext()) {
+                String word = it.next();
+                if(word.length()>num) {
+                    it.remove();
+                }
+            }
+            
+            for(int i = 0; i < wordChecker.length; i++) {
+                for(int j = 0; j<finalWords.size(); j++) {
+                    if(!finalWords.get(i).startsWith(wordChecker[i])) {
+                        finalWords.remove(words.get(j));
+                    }
+                }
+            }
+        
+        // TESTING
+        System.out.println("Size of list: " + words.size());
+        System.out.println("Size of list after removals: " + finalWords.size());
+        for(int i = 0; i<5; i++) {
+            System.out.println("A word in the final list: " + finalWords.get(i));
         }
         
     }
