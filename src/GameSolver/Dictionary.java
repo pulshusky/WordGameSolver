@@ -54,11 +54,6 @@ public class Dictionary {
         // doesn't get affected
         finalWords = (ArrayList<String>) words.clone();
 
-        /*
-         * // removes the word greater than the max. length of the word for(int
-         * i = 0; i < finalWords.size(); i++) {
-         * if(finalWords.get(i).length()>num) { finalWords.remove(i); } }
-         */
 
         ListIterator<String> it = finalWords.listIterator();
 
@@ -75,14 +70,6 @@ public class Dictionary {
             }
         }
 
-        /*
-         * for (int i = 0; i < wordChecker.length; i++) { for (int j = 0; j <
-         * finalWords.size(); j++) { if
-         * (!finalWords.get(i).startsWith(wordChecker[i])) {
-         * finalWords.remove(words.get(j)); } } }
-         */
-        
-        // TESTING
         
         System.out.println("Size of list after removals: " + finalWords.size());
         System.out.println("Words Possible");
